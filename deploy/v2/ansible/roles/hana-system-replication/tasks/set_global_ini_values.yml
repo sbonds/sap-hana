@@ -16,5 +16,8 @@
         value: "true"
       - option: interval
         value: "3600"
-      - option: replication
+      - option: replicate
         value: "true"
+      - option: fixed_exclusion_global.ini/SYSTEM
+        value: "storage/*, persistence/*path*, internal_hostname_resolution/*, public_hostname_resolution/*, system_replication*, multidb/mode, system_landscape_hostname_virtualization/sldsystemhome"
+      

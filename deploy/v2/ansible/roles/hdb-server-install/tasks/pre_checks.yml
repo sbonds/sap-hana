@@ -1,19 +1,24 @@
 ---
 
-#SUSE bug 1167134
-- name: Ensure DHCLIENT_SET_HOSTNAME is set to no
-  become: true
-  become_user: root
-  lineinfile:
-    path: /etc/sysconfig/network/dhcp
-    regexp: '^DHCLIENT_SET_HOSTNAME='
-    line: DHCLIENT_SET_HOSTNAME="no"
+- name: Ensure correct hostname are set and not changed for SLES
+  when:
+    - ansible_facts['distribution_file_variety'] == 'SUSE'
+  block:
 
-# This is workaround for https://github.com/Azure/WALinuxAgent/pull/1832
-- name: Ensure the correct hostname are set on HANA VMs
-  become: true
-  become_user: root
-  hostname:
-    name: "{{ item.dbname }}"
-  when: item.ip_admin_nic == ansible_default_ipv4.address
-  loop: "{{ hana_database.nodes }}"
+  #SUSE bug 1167134
+  - name: Ensure DHCLIENT_SET_HOSTNAME is set to no
+    become: true
+    become_user: root
+    lineinfile:
+      path: /etc/sysconfig/network/dhcp
+      regexp: '^DHCLIENT_SET_HOSTNAME='
+      line: DHCLIENT_SET_HOSTNAME="no"
+
+  # This is workaround for https://github.com/Azure/WALinuxAgent/pull/1832
+  - name: Ensure the correct hostname are set on HANA VMs
+    become: true
+    become_user: root
+    hostname:
+      name: "{{ item.dbname }}"
+    when: item.ip_admin_nic == ansible_default_ipv4.address
+    loop: "{{ hana_database.nodes }}"

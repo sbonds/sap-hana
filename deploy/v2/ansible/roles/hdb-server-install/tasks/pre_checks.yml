@@ -17,3 +17,4 @@
     name: "{{ item.dbname }}"
   when: item.ip_admin_nic == ansible_default_ipv4.address
   loop: "{{ hana_database.nodes }}"
+  

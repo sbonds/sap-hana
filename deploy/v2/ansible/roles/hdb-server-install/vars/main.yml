@@ -1,0 +1,3 @@
+#
+hana_studio_install_path: "/hana/shared/{{ hana_database.instance.sid }}/hdbstudio"
+hana_client_install_path: "/hana/shared/{{ hana_database.instance.sid }}/hdbclient"

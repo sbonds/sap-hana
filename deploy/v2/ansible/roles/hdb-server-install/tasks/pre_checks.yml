@@ -2,7 +2,7 @@
 
 - name: Ensure correct hostname are set and not changed for SLES
   when:
-    - "{{ ansible_os_family|upper }}" == 'SUSE'
+    - ansible_os_family|upper == 'SUSE'
   block:
 
   #SUSE bug 1167134
